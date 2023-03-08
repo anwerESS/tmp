@@ -1,33 +1,34 @@
 #include <iostream>
+#include <string>
+#include <cstring>
 #include <curl/curl.h>
+
+size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+    std::string *response = static_cast<std::string *>(userdata);
+    response->append(ptr, size * nmemb);
+    return size * nmemb;
+}
 
 int main() {
     CURL *curl;
     CURLcode res;
     struct curl_slist *headers = NULL;
+    std::string response;
 
     curl = curl_easy_init();
     if (curl) {
-        // Set the URL
-        curl_easy_setopt(curl, CURLOPT_URL, "https://example.com/api");
-
-        // Set the JSON payload
+        const char *url = "https://example.com/api";
         const char *json_str = "{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}";
+
+        curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_str);
 
-        // Set the headers
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
-        // Set the response callback
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, [](char *ptr, size_t size, size_t nmemb, void *userdata) -> size_t {
-            std::string *response = static_cast<std::string *>(userdata);
-            response->append(ptr, size * nmemb);
-            return size * nmemb;
-        });
-        std::string response;
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
-        // Perform the request
         res = curl_easy_perform(curl);
         if (res == CURLE_OK) {
             long response_code;
@@ -39,7 +40,6 @@ int main() {
             std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
         }
 
-        // Cleanup
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
     }
