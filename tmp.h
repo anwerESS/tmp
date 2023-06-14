@@ -1,3 +1,89 @@
+#include <iostream>
+#include <string>
+#include <boost/asio.hpp>
+
+int main() {
+    // Create an asio io_context
+    boost::asio::io_context io_context;
+
+    // Create a resolver to resolve the server hostname and port
+    boost::asio::ip::tcp::resolver resolver(io_context);
+
+    // Resolve the server hostname and port
+    boost::asio::ip::tcp::resolver::results_type endpoints = resolver.resolve("sgconnect-hom.fr.world.socgen", "https");
+
+    // Create a socket
+    boost::asio::ip::tcp::socket socket(io_context);
+
+    // Connect to the server
+    boost::asio::connect(socket, endpoints);
+
+    // Send the HTTP POST request
+    std::string request =
+        "POST /sgconnect/oauth2/access_token HTTP/1.1\r\n"
+        "Host: sgconnect-hom.fr.world.socgen\r\n"
+        "Authorization: Basic YWI4MzQwMmEtMmRiMi00NmExLTkyZWMtYzVjODg1NmMzYTlmOjJiMDZoNG45ZGU5OGpjbWZobDFuY2g3a2I1MDJk\r\n"
+        "Content-Type: application/x-www-form-urlencoded\r\n"
+        "Content-Length: 52\r\n"
+        "Connection: close\r\n\r\n"
+        "grant_type=client_credentials&scope=api.sgss-institutional-custody-securities-account.v1%20api.sgss-institutional-custody-securities-account.securities-accounts.read";
+
+    boost::asio::write(socket, boost::asio::buffer(request));
+
+    // Read and print the response
+    boost::asio::streambuf response;
+    boost::asio::read_until(socket, response, "\r\n");
+
+    std::istream response_stream(&response);
+    std::string http_version;
+    response_stream >> http_version;
+
+    unsigned int status_code;
+    response_stream >> status_code;
+
+    std::string status_message;
+    std::getline(response_stream, status_message);
+
+    if (!response_stream || http_version.substr(0, 5) != "HTTP/") {
+        std::cout << "Invalid response\n";
+        return 1;
+    }
+
+    std::string header;
+    while (std::getline(response_stream, header) && header != "\r") {
+        // Process the response headers if needed
+    }
+
+    // Read the response body
+    std::stringstream response_body;
+    if (response.size() > 0) {
+        response_body << &response;
+    }
+    std::cout << "Response: " << response_body.str() << std::endl;
+
+    // Close the socket
+    socket.close();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 curl --request POST \
   --url https://sgconnect-hom.fr.world.socgen/sgconnect/oauth2/access_token \
   --header 'Authorization: Basic YWI4MzQwMmEtMmRiMi00NmExLTkyZWMtYzVjODg1NmMzYTlmOjJiMDZoNG45ZGU5OGpjbWZobDFuY2g3a2I1MDJk' \
