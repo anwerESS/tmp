@@ -1,3 +1,8 @@
+JSON parse error: Cannot construct instance of `com.socgen.sgs.api.sgss_institutional_custody_securities_account_api.infra.api.server.dto.SecuritiesLiaisonRequestDto` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('{"liaisonAccountNumbers": ["0540000080008743"]}'); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.socgen.sgs.api.sgss_institutional_custody_securities_account_api.infra.api.server.dto.SecuritiesLiaisonRequestDto` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('{"liaisonAccountNumbers": ["0540000080008743"]}')
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 1]
+
+
+
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
