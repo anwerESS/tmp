@@ -1,40 +1,23 @@
-#include <iostream>
-#include <string>
-
-// Function to extract "access_token" from JSON string
-std::string extractAccessToken(const std::string& jsonString) {
-    std::string tokenKey = "\"access_token\":\"";
-    size_t pos = jsonString.find(tokenKey);
-    if (pos == std::string::npos) {
-        std::cerr << "JSON does not contain 'access_token'." << std::endl;
-        return "";
+std::string extractBankCode(const std::string& json) {
+    // Find the start of "securitiesAccountBasicData" object
+    size_t basicDataStart = json.find("\"securitiesAccountBasicData\": {");
+    if (basicDataStart == std::string::npos) {
+        return ""; // "securitiesAccountBasicData" object not found
     }
 
-    pos += tokenKey.length();
-
-    size_t endPos = jsonString.find("\"", pos);
-    if (endPos == std::string::npos) {
-        std::cerr << "Invalid JSON format." << std::endl;
-        return "";
+    // Find the start of "bankCode" key within "securitiesAccountBasicData"
+    size_t bankCodeStart = json.find("\"bankCode\": \"", basicDataStart);
+    if (bankCodeStart == std::string::npos) {
+        return ""; // "bankCode" key not found within "securitiesAccountBasicData"
     }
 
-    return jsonString.substr(pos, endPos - pos);
+    // Find the end of "bankCode" value
+    size_t bankCodeEnd = json.find("\"", bankCodeStart + 14);
+    if (bankCodeEnd == std::string::npos) {
+        return ""; // Unclosed "bankCode" value
+    }
+
+    // Extract and return the "bankCode" value
+    return json.substr(bankCodeStart + 14, bankCodeEnd - bankCodeStart - 14);
 }
-
-int main() {
-    // Your JSON string
-    std::string jsonString = "{\"access_token\":\"ngjdklmjdnmjmkdhyîoqhdfsuihfu^qsidhfi^qfhqdŝi^fsiqhqpihqpdfsihfqipsfhudsqipyvuigfqfdyhidqfgdgsdfshghuiyygfdsg\",\"scope\":\"fdmhiulhlhfdlxhdfxhlloigpopgifdspgsf\",\"token_scope\":\"bearer\",\"expries_in\":599}";
-
-
-jsonString = "\"access_token";
-
-    std::string accessToken = extractAccessToken(jsonString);
-
-    if (!accessToken.empty()) {
-        std::cout << "Access Token: " << accessToken << std::endl;
-    } else {
-        std::cerr << "Failed to extract access token." << std::endl;
-    }
-
-    return 0;
-}
+ 
