@@ -1,58 +1,36 @@
-SELECT
-    DRH.DRI_CODE         "REFERENCE",
-    DRH.DRI_LINK         "LINK",
-    STA.IST_CODE         "STATUT",
-    DRH.STS_CODE         "CIRCUIT RL",
-    ENC.ENT_CODE         "ENTITE",
-    SECOD.SCO_CODE       "ISIN",
-    DRH2.DRI_INPUT_DATE  "DATE DENOUEMENT",
-    DRH2.DRI_ORIGIN      "ORIGINE",
-    CLI.CLI_CODE         "CODE CLIENT",
-    CLI.CLI_NAME         "LIBELLE CODE CLIENT",
-    DRH2.SAC_CODE        "COMPTE-TITRE",
-    SAC.SAC_NAME         "LIBELLE COMPTE-TITRE",
-    OPC.IOC_CODE         "CODE OPERATION",
-    OPC.IOC_NAME         "LIBELLE CODE OPERATION",
-    MED.IME_NAME         "MEDIA",
-    DRH2.DRI_CREATE_DATE "DATE CREATION",
-    DRH.ACM_CODE         "MATRICULE",
-    DRH.DRI_CLIENT_REF   "REF CLIENT"
-FROM
-    DRI_HISTO DRH
-    JOIN DRI_HISTO DRH2 ON DRH.DRI_CODE = DRH2.DRI_CODE AND DRH.DRI_LINK = DRH2.DRI_LINK
-    JOIN SECURITIES_ACCOUNT SAC ON DRH2.SAC_CODE = SAC.SAC_CODE
-    JOIN ENTITY_CLIENT ENC ON ENC.ENT_CLI_ID = SAC.ENT_CLI_ID
-    JOIN CLIENT CLI ON CLI.PAR_CUSTOMER_ID = ENC.PAR_CUSTOMER_ID
-    JOIN ITL_OPERATION_CODE OPC ON DRH2.IL_OPC_ID = OPC.IOC_PSEUDO AND OPC.IL_LNG_ID = '001'
-    JOIN ITL_MEDIA MED ON DRH2.IL_MED_ID = MED.IME_PSEUDO AND MED.IL_LNG_ID = '001'
-    JOIN SECURITY_CODIF SECOD ON DRH2.SEC_CODE = SECOD.SEC_CODE AND SECOD.COF_CODE = 'ISIN'
-    JOIN ITL_STATUS STA ON DRH2.IL_STA_ID = STA.IST_ID
-WHERE
-    TRUNC(DRH.DRI_INPUT_DATE) BETWEEN TO_DATE('2023/01/31', 'YYYY/MM/DD') AND TO_DATE('2023/03/31', 'YYYY/MM/DD')
-    AND DRH.DRI_INPUT_DATE = (
-        SELECT
-            MIN(DRH3.DRI_INPUT_DATE)
-        FROM
-            DRI_HISTO DRH3
-        WHERE
-            DRH.DRI_CODE = DRH3.DRI_CODE
-            AND DRH.DRI_LINK = DRH3.DRI_LINK
-    ) -- premier statut
-    AND DRH2.DRI_INPUT_DATE = (
-        SELECT
-            MAX(DRH4.DRI_INPUT_DATE)
-        FROM
-            DRI_HISTO DRH4
-        WHERE
-            DRH.DRI_CODE = DRH4.DRI_CODE
-            AND DRH.DRI_LINK = DRH4.DRI_LINK
-    ) -- dernier statut DEN
-    AND DRH.ACM_CODE <> 'ACCBATCH' -- Manuel
-    AND (DRH2.DRI_CROSS_CODE IS NULL OR (DRH2.DRI_CROSS_CODE IS NOT NULL AND DRH2.STS_CODE = 'TRS'))
-    AND TRUNC(DRH2.DRI_INPUT_DATE) BETWEEN TO_DATE('2023/01/31', 'YYYY/MM/DD') AND TO_DATE('2023/03/31', 'YYYY/MM/DD')
-ORDER BY
-    3 DESC,
-    6 ASC,
-    8 ASC,
-    1 DESC,
-    2 ASC;
+#include <iostream>
+#include <string>
+
+int main() { 
+    char ss[] = "12345678@12_A001@12";
+    std::string s1, s2;
+
+    // Convert the C-style string to an std::string
+    std::string input(ss);
+
+    // Find the first occurrence of "@12" in input
+    size_t pos1 = input.find("@12");
+
+    if (pos1 != std::string::npos) {
+        // Extract s1
+        s1 = input.substr(0, pos1);
+
+        // Find the second occurrence of "@12" in input
+        size_t pos2 = input.find("@12", pos1 + 3);
+
+        if (pos2 != std::string::npos) {
+            // Extract s2
+            s2 = input.substr(pos1 + 3, pos2 - (pos1 + 3));
+
+            // Print the results
+            std::cout << "s1 = \"" << s1 << "\"" << std::endl;
+            std::cout << "s2 = \"" << s2 << "\"" << std::endl;
+        } else {
+            std::cout << "Second '@12' not found in the string." << std::endl;
+        }
+    } else {
+        std::cout << "First '@12' not found in the string." << std::endl;
+    }
+
+    return 0;
+}
