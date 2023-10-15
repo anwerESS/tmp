@@ -1,36 +1,13 @@
-#include <iostream>
-#include <string>
+std::string padStringToDesiredLength(const std::string& s1, const std::string& s2, int desiredLength) {
+    // Calculate the number of characters needed to pad to reach the desired length
+    int paddingSize = desiredLength - s1.length() - s2.length();
 
-int main() { 
-    char ss[] = "12345678@12_A001@12";
-    std::string s1, s2;
-
-    // Convert the C-style string to an std::string
-    std::string input(ss);
-
-    // Find the first occurrence of "@12" in input
-    size_t pos1 = input.find("@12");
-
-    if (pos1 != std::string::npos) {
-        // Extract s1
-        s1 = input.substr(0, pos1);
-
-        // Find the second occurrence of "@12" in input
-        size_t pos2 = input.find("@12", pos1 + 3);
-
-        if (pos2 != std::string::npos) {
-            // Extract s2
-            s2 = input.substr(pos1 + 3, pos2 - (pos1 + 3));
-
-            // Print the results
-            std::cout << "s1 = \"" << s1 << "\"" << std::endl;
-            std::cout << "s2 = \"" << s2 << "\"" << std::endl;
-        } else {
-            std::cout << "Second '@12' not found in the string." << std::endl;
-        }
-    } else {
-        std::cout << "First '@12' not found in the string." << std::endl;
+    if (paddingSize < 0) {
+        // Handle the case where the combined length is already longer than the desired length
+        std::cerr << "Error: Combined length exceeds the desired length." << std::endl;
+        return "";
     }
 
-    return 0;
+    // Construct the padded string
+    return s1 + std::string(paddingSize, ' ') + s2;
 }
