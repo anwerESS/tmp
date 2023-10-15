@@ -1,13 +1,38 @@
-std::string padStringToDesiredLength(const std::string& s1, const std::string& s2, int desiredLength) {
-    // Calculate the number of characters needed to pad to reach the desired length
-    int paddingSize = desiredLength - s1.length() - s2.length();
+#include <iostream>
+#include <string>
+#include <locale>
+#include <sstream>
 
-    if (paddingSize < 0) {
-        // Handle the case where the combined length is already longer than the desired length
-        std::cerr << "Error: Combined length exceeds the desired length." << std::endl;
-        return "";
+double convertStringToDouble(const std::string& s) {
+    // Check if the input string is empty
+    if (s.empty()) {
+        return 0.0;
     }
 
-    // Construct the padded string
-    return s1 + std::string(paddingSize, ' ') + s2;
+    std::string formattedString;
+
+    // Remove spaces
+    for (size_t i = 0; i < s.length(); ++i) {
+        if (s[i] != ' ') {
+            formattedString += s[i];
+        }
+    }
+
+    // Replace a comma with a dot for decimal point if needed
+    for (size_t i = 0; i < formattedString.length(); ++i) {
+        if (formattedString[i] == ',') {
+            formattedString[i] = '.';
+        }
+    }
+
+    // Use a stringstream for conversion
+    std::istringstream iss(formattedString);
+    double result = 0.0;
+
+    if (!(iss >> result)) {
+        // Conversion failed
+        throw std::invalid_argument("Invalid input string");
+    }
+
+    return result;
 }
