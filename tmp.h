@@ -1,38 +1,18 @@
-#include <iostream>
-#include <string>
-#include <locale>
-#include <sstream>
-
-double convertStringToDouble(const std::string& s) {
-    // Check if the input string is empty
-    if (s.empty()) {
-        return 0.0;
-    }
-
-    std::string formattedString;
-
-    // Remove spaces
-    for (size_t i = 0; i < s.length(); ++i) {
-        if (s[i] != ' ') {
-            formattedString += s[i];
+std::string formatFloat(double d) {
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << d;
+    std::string s = stream.str();
+    std::string integerPart = s.substr(0, s.find('.'));
+    std::string decimalPart = s.substr(s.find('.') + 1);
+    std::string formattedIntegerPart;
+    int count = 0;
+    for (int i = integerPart.size() - 1; i >= 0; i--) {
+        formattedIntegerPart = integerPart[i] + formattedIntegerPart;
+        count++;
+        if (count == 3 && i != 0) {
+            formattedIntegerPart = " " + formattedIntegerPart;
+            count = 0;
         }
     }
-
-    // Replace a comma with a dot for decimal point if needed
-    for (size_t i = 0; i < formattedString.length(); ++i) {
-        if (formattedString[i] == ',') {
-            formattedString[i] = '.';
-        }
-    }
-
-    // Use a stringstream for conversion
-    std::istringstream iss(formattedString);
-    double result = 0.0;
-
-    if (!(iss >> result)) {
-        // Conversion failed
-        throw std::invalid_argument("Invalid input string");
-    }
-
-    return result;
+    return formattedIntegerPart + "," + decimalPart;
 }
