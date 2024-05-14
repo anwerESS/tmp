@@ -5,14 +5,15 @@ bool isDecimal(const std::string& str) {
     bool hasDot = false;
 
     // Check each character in the string
-    for (char c : str) {
+    for (size_t i = 0; i < str.length(); ++i) {
+        char c = str[i];
         if (c == '.') {
             // Ensure only one dot is present
             if (hasDot) {
                 return false; // More than one dot found
             }
             hasDot = true;
-        } else if (!std::isdigit(c)) {
+        } else if (!isdigit(c)) {
             return false; // Non-digit character found
         }
     }
