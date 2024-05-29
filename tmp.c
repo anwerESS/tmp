@@ -1,35 +1,29 @@
-#include <iostream>
-#include <string>
+@echo off
+setlocal enabledelayedexpansion
 
-bool isDecimal(const std::string& str) {
-    bool hasDot = false;
+if "%1"=="" (
+    echo Usage: treelevel.bat [directory] [depth]
+    goto :eof
+)
 
-    // Check each character in the string
-    for (size_t i = 0; i < str.length(); ++i) {
-        char c = str[i];
-        if (c == '.') {
-            // Ensure only one dot is present
-            if (hasDot) {
-                return false; // More than one dot found
-            }
-            hasDot = true;
-        } else if (!isdigit(c)) {
-            return false; // Non-digit character found
-        }
-    }
+set "dir=%1"
+set /a maxdepth=%2
 
-    // Ensure at least one digit before and after the dot
-    return hasDot && str.find('.') != 0 && str.find('.') != str.length() - 1;
-}
+call :recurse "%dir%" 1
 
-int main() {
-    std::string str = "123.45";
+goto :eof
 
-    if (isDecimal(str)) {
-        std::cout << "'" << str << "' is in the '<number>.<number>' format." << std::endl;
-    } else {
-        std::cout << "'" << str << "' is not in the '<number>.<number>' format." << std::endl;
-    }
+:recurse
+set "path=%1"
+set /a depth=%2
 
-    return 0;
-}
+if %depth% leq %maxdepth% (
+    for /d %%d in ("%path%\*") do (
+        for /l %%i in (1,1,%depth%) do set "tab=!tab!    "
+        echo !tab!|findstr /r /c:"    " 1>nul && echo ^|!tab!----%%~nxd
+        set "tab="
+        call :recurse "%%d" !depth!+1
+    )
+)
+
+exit /b
