@@ -1,29 +1,15 @@
-@echo off
-setlocal enabledelayedexpansion
+import re
 
-if "%1"=="" (
-    echo Usage: treelevel.bat [directory] [depth]
-    goto :eof
-)
+s = "***** **** (key-1, key-2, key-3, key-n) *** ***** **** (val-1, val-2, val-3, val-n) "
 
-set "dir=%1"
-set /a maxdepth=%2
+# Find all content within parentheses
+matches = re.findall(r'\((.*?)\)', s)
 
-call :recurse "%dir%" 1
+# Split the keys and values by commas
+keys = matches[0].split(', ')
+values = matches[1].split(', ')
 
-goto :eof
+# Create a dictionary by zipping keys and values together
+d = dict(zip(keys, values))
 
-:recurse
-set "path=%1"
-set /a depth=%2
-
-if %depth% leq %maxdepth% (
-    for /d %%d in ("%path%\*") do (
-        for /l %%i in (1,1,%depth%) do set "tab=!tab!    "
-        echo !tab!|findstr /r /c:"    " 1>nul && echo ^|!tab!----%%~nxd
-        set "tab="
-        call :recurse "%%d" !depth!+1
-    )
-)
-
-exit /b
+print(d)
