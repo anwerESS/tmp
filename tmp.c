@@ -1,58 +1,123 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
-// Function to encode a single character to Base64
-char base64EncodeChar(unsigned char c) {
-    if (c < 26) return 'A' + c;
-    if (c < 52) return 'a' + (c - 26);
-    if (c < 62) return '0' + (c - 52);
-    if (c == 62) return '+';
-    if (c == 63) return '/';
-    return '=';
-}
-
-// Function to convert a UTF-8 string to Base64
-std::string utf8ToBase64(const std::string& input) {
-    const unsigned char* bytes = reinterpret_cast<const unsigned char*>(input.c_str());
-    size_t len = input.length();
-    std::string output;
-
-    for (size_t i = 0; i < len; i += 3) {
-        // Pack three bytes into a 24-bit number
-        unsigned int value = 0;
-        value |= (bytes[i] << 16);
-        if (i + 1 < len) {
-            value |= (bytes[i + 1] << 8);
+{
+    "oracledevtools.connectionConfiguration.configFilesFolder": "/home/anweress/Oracle/network/admin",
+    "[oraclesql]": {
+        "editor.suggest.showSnippets": true,
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
         }
-        if (i + 2 < len) {
-            value |= bytes[i + 2];
+    },
+    "oracledevtools.connectionConfiguration.walletFileFolder": "/home/anweress/Oracle/network/admin",
+    "oracledevtools.bookmarkFileFolder": "/home/anweress/Oracle/oracle.oracledevtools",
+    "oracledevtools.download.otherFolder": "/home/anweress/downloads",
+    "workbench.colorTheme": "monokai-charcoal (red)",
+    "redhat.telemetry.enabled": false,
+    "files.autoSave": "afterDelay",
+    "sonarlint.rules": {
+        "css:S125": {
+            "level": "off"
+        },
+        "css:S4658": {
+            "level": "off"
+        },
+        "javascript:S125": {
+            "level": "off"
+        },
+        "javascript:S6774": {
+            "level": "off"
+        },
+        "javascript:S905": {
+            "level": "off"
+        },
+        "javascript:S6848": {
+            "level": "off"
         }
+    },
+    "workbench.iconTheme": "eq-material-theme-icons-darker",
+    "frameIndentRainbow.ignoreErrorLanguages": [
 
-        // Encode the 24-bit number as four 6-bit Base64 characters
-        output.push_back(base64EncodeChar((value >> 18) & 0x3F));
-        output.push_back(base64EncodeChar((value >> 12) & 0x3F));
-        if (i + 1 < len) {
-            output.push_back(base64EncodeChar((value >> 6) & 0x3F));
-        } else {
-            output.push_back('=');
+        "markdown"
+    ],
+    // "frameIndentRainbow.includedLanguages": [
+    //     "html", "html5", "java",
+    // ],
+    "frameIndentRainbow.colors": [
+
+        // "rgba(245, 66, 96, 0.05)",
+        // "rgba(0, 229, 255, 0.05)",
+        // "rgba(174, 0, 255, 0.05)",
+        // "rgba(0, 255, 162, 0.05)"
+    ],
+    "indentRainbow.colors": [
+        "rgba(245, 66, 96, 1)",
+        "rgba(0, 229, 255, 1)",
+        "rgba(174, 0, 255, 1)",
+        "rgba(0, 255, 162, 1)",
+        "rgba(239, 255, 64, 1)"
+    ],
+  // Using the light mode
+    "indentRainbow.indicatorStyle": "light",
+  // we use a simple 1 pixel wide line
+    "indentRainbow.lightIndicatorStyleLineWidth": 2,
+    "editor.mouseWheelZoom": true,
+    "terminal.integrated.mouseWheelZoom": true,
+    "terminal.integrated.fontSize": 13,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "cmake.showOptionsMovedNotification": false,
+    "explorer.confirmDelete": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 2,
+    "git.openRepositoryInParentFolders": "never",
+    "editor.lineHeight": 1.15,
+    "prettier.printWidth": 100,
+    "rsp-ui.enableStartServerOnActivation": [
+        {
+            "id": "redhat.vscode-community-server-connector",
+            "name": "Community Server Connector",
+            "startOnActivation": true
         }
-        if (i + 2 < len) {
-            output.push_back(base64EncodeChar(value & 0x3F));
-        } else {
-            output.push_back('=');
-        }
-    }
+    ],
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.enabled": false,
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "window.menuBarVisibility": "compact",
+    "RainbowBrackets.consecutivePairColors": [
 
-    return output;
-}
+        "()",
+        "[]",
+        "{}",
+        [
+        "rgba(245, 66, 96, 1)",
+        "rgba(0, 229, 255, 1)",
+        "rgba(174, 0, 255, 1)",
+        "rgba(0, 255, 162, 1)",
+        "rgba(239, 255, 64, 1)"
+        ],
+        "Revioletd"
+    ],
+    "frameIndentRainbow.includedLanguages": [
 
-int main() {
-    std::string utf8String = "Hello, World!";
-    std::string base64String = utf8ToBase64(utf8String);
+    ],
+    "frameIndentRainbow.excludedLanguages": [
+    
 
-    std::cout << "UTF-8 String: " << utf8String << std::endl;
-    std::cout << "Base64 Encoded: " << base64String << std::endl;
+        "plaintext"
+    ],
+    "indentRainbow.excludedLanguages": [
+        
+        "plaintext"
+    ]
 
-    return 0;
 }
