@@ -1,123 +1,37 @@
-{
-    "oracledevtools.connectionConfiguration.configFilesFolder": "/home/anweress/Oracle/network/admin",
-    "[oraclesql]": {
-        "editor.suggest.showSnippets": true,
-        "editor.quickSuggestions": {
-            "comments": "on",
-            "strings": "on",
-            "other": "on"
-        }
-    },
-    "oracledevtools.connectionConfiguration.walletFileFolder": "/home/anweress/Oracle/network/admin",
-    "oracledevtools.bookmarkFileFolder": "/home/anweress/Oracle/oracle.oracledevtools",
-    "oracledevtools.download.otherFolder": "/home/anweress/downloads",
-    "workbench.colorTheme": "monokai-charcoal (red)",
-    "redhat.telemetry.enabled": false,
-    "files.autoSave": "afterDelay",
-    "sonarlint.rules": {
-        "css:S125": {
-            "level": "off"
-        },
-        "css:S4658": {
-            "level": "off"
-        },
-        "javascript:S125": {
-            "level": "off"
-        },
-        "javascript:S6774": {
-            "level": "off"
-        },
-        "javascript:S905": {
-            "level": "off"
-        },
-        "javascript:S6848": {
-            "level": "off"
-        }
-    },
-    "workbench.iconTheme": "eq-material-theme-icons-darker",
-    "frameIndentRainbow.ignoreErrorLanguages": [
+let QUERY_PFCMSGH = 'YOUR_QUERY_STRING_HERE';
 
-        "markdown"
-    ],
-    // "frameIndentRainbow.includedLanguages": [
-    //     "html", "html5", "java",
-    // ],
-    "frameIndentRainbow.colors": [
+let keys = QUERY_PFCMSGH.substring(QUERY_PFCMSGH.indexOf('(') + 1, QUERY_PFCMSGH.indexOf(')')).split(',');
+let values = QUERY_PFCMSGH.substring(QUERY_PFCMSGH.indexOf('(') + 1, QUERY_PFCMSGH.lastIndexOf(')')).split(',');
 
-        // "rgba(245, 66, 96, 0.05)",
-        // "rgba(0, 229, 255, 0.05)",
-        // "rgba(174, 0, 255, 0.05)",
-        // "rgba(0, 255, 162, 0.05)"
-    ],
-    "indentRainbow.colors": [
-        "rgba(245, 66, 96, 1)",
-        "rgba(0, 229, 255, 1)",
-        "rgba(174, 0, 255, 1)",
-        "rgba(0, 255, 162, 1)",
-        "rgba(239, 255, 64, 1)"
-    ],
-  // Using the light mode
-    "indentRainbow.indicatorStyle": "light",
-  // we use a simple 1 pixel wide line
-    "indentRainbow.lightIndicatorStyleLineWidth": 2,
-    "editor.mouseWheelZoom": true,
-    "terminal.integrated.mouseWheelZoom": true,
-    "terminal.integrated.fontSize": 13,
-    "emmet.includeLanguages": {
-        "javascript": "javascriptreact"
-    },
-    "cmake.showOptionsMovedNotification": false,
-    "explorer.confirmDelete": false,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.indentSize": "tabSize",
-    "editor.tabSize": 2,
-    "git.openRepositoryInParentFolders": "never",
-    "editor.lineHeight": 1.15,
-    "prettier.printWidth": 100,
-    "rsp-ui.enableStartServerOnActivation": [
-        {
-            "id": "redhat.vscode-community-server-connector",
-            "name": "Community Server Connector",
-            "startOnActivation": true
-        }
-    ],
-    "editor.minimap.renderCharacters": false,
-    "editor.minimap.showSlider": "always",
-    "editor.minimap.enabled": false,
-    "[css]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "window.menuBarVisibility": "compact",
-    "RainbowBrackets.consecutivePairColors": [
-
-        "()",
-        "[]",
-        "{}",
-        [
-        "rgba(245, 66, 96, 1)",
-        "rgba(0, 229, 255, 1)",
-        "rgba(174, 0, 255, 1)",
-        "rgba(0, 255, 162, 1)",
-        "rgba(239, 255, 64, 1)"
-        ],
-        "Revioletd"
-    ],
-    "frameIndentRainbow.includedLanguages": [
-
-    ],
-    "frameIndentRainbow.excludedLanguages": [
-    
-
-        "plaintext"
-    ],
-    "indentRainbow.excludedLanguages": [
-        
-        "plaintext"
-    ]
-
+let values2 = [];
+let skip = false;
+for (let i = 0; i < values.length; i++) {
+    let e = values[i];
+    if (e.startsWith('to_date')) {
+        skip = true;
+        values2.push(values[i] + ',' + values[i + 1]);
+    } else if (skip) {
+        skip = false;
+    } else {
+        values2.push(values[i]);
+    }
 }
+
+let d = {};
+keys.forEach((key, index) => {
+    d[key] = values2[index];
+});
+d['IPM_ACM_MODIF'] = d['HPM_ACM_MODIF'];
+delete d['IND_ARCH_INFOCENTRE'];
+delete d['SENS'];
+delete d['HPM_ACM_MODIF'];
+
+let COLS_NAME = '';
+let VALUES = '';
+for (let [k, v] of Object.entries(d)) {
+    COLS_NAME += k + ',';
+    VALUES += v + ',';
+}
+
+let QUERY_PFCMSGIN = `INSERT INTO PFCMSGIN (${COLS_NAME.slice(0, -1)}) VALUES (${VALUES.slice(0, -1)});`;
+console.log(QUERY_PFCMSGIN);
