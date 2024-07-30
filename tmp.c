@@ -1,37 +1,54 @@
-let QUERY_PFCMSGH = 'YOUR_QUERY_STRING_HERE';
+HEADER = """
+*********************************************
+* Nom du fichier: pa_ng_UNITYXXXXXXXXXX_009_rcy.sql
+* Generé le: 09/02/2024
+* Développeur: 
+*********************************************
+"""
+FOOTER = """END;
+/
+"""
 
-let keys = QUERY_PFCMSGH.substring(QUERY_PFCMSGH.indexOf('(') + 1, QUERY_PFCMSGH.indexOf(')')).split(',');
-let values = QUERY_PFCMSGH.substring(QUERY_PFCMSGH.indexOf('(') + 1, QUERY_PFCMSGH.lastIndexOf(')')).split(',');
+QUERY_ROM = """
+INSERT INTO RECYCLAGE_MQ 
+(REC_ID, ENR_CODE, MATCHING_REFERENCE, ORIGINAL_FLOW, NB_TRIES)
+VALUES ({}, '{}', '{}', vORIGINAL_FLOW, '{}');
+"""
 
-let values2 = [];
-let skip = false;
-for (let i = 0; i < values.length; i++) {
-    let e = values[i];
-    if (e.startsWith('to_date')) {
-        skip = true;
-        values2.push(values[i] + ',' + values[i + 1]);
-    } else if (skip) {
-        skip = false;
-    } else {
-        values2.push(values[i]);
+content = HEADER
+
+content += `
+DECLARE
+vORIGINAL_FLOW CLOB;
+BEGIN
+`
+
+function textToLines(txt) {
+    return txt.split('\n');
+}
+
+function splitFlux(flux, charNbr = MAX_LINE_LGTH) {
+    let splittedFluxList = [];
+    for (let i = 0; i < flux.length; i += charNbr) {
+        splittedFluxList.push(flux.substring(i, i + charNbr));
     }
+    let formattedFlux = '\n'.join(splittedFluxList);
+    return `    ${formattedFlux}    `;
 }
 
-let d = {};
-keys.forEach((key, index) => {
-    d[key] = values2[index];
-});
-d['IPM_ACM_MODIF'] = d['HPM_ACM_MODIF'];
-delete d['IND_ARCH_INFOCENTRE'];
-delete d['SENS'];
-delete d['HPM_ACM_MODIF'];
+let f = `*INSTRINST      MTS49      LUX          REIM1000034221597`;
 
-let COLS_NAME = '';
-let VALUES = '';
-for (let [k, v] of Object.entries(d)) {
-    COLS_NAME += k + ',';
-    VALUES += v + ',';
+console.log(splitFlux(f));
+
+let lines = textToLines(f);
+let INITIAL_ID = 1;
+
+for (let line of lines) {
+    content += QUERY_ROM.replace('{}', INITIAL_ID++)
+                        .replace('{}', splitFlux(line))
+                        .replace('{}', 'INITIAL_ID_ENR_CODE')
+                        .replace('{}', 'MATCHING_REFERENCE')
+                        .replace('{}', 'NB_TRIES');
 }
 
-let QUERY_PFCMSGIN = `INSERT INTO PFCMSGIN (${COLS_NAME.slice(0, -1)}) VALUES (${VALUES.slice(0, -1)});`;
-console.log(QUERY_PFCMSGIN);
+content += FOOTER;
