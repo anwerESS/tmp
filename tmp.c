@@ -89,3 +89,16 @@ public ResponseEntity<ForexResponseDto> getForexByBookReference(
         // Handle other exceptions
     }
 }
+
++++++++++++++++++++++++++++++++++++++++++++++++=
+    {
+  "timestamp": "2023-11-15T14:30:45.123456",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Book reference must be 1-16 alphanumeric characters",
+  "path": "/api/forex/invalid-ref#",
+  "details": {
+    "bookReference": "invalid-ref#",
+    "pattern": "Must be 1-16 alphanumeric characters"
+  }
+}
