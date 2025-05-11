@@ -1,24 +1,41 @@
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-import static org.mockito.Mockito.*;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 class LocalDateTimeToUtcSerializerTest {
 
     @Test
-    void testSerialize() throws IOException {
+    void testSerializeParisTimeToUtc() throws IOException {
+        // Arrange
         LocalDateTimeToUtcSerializer serializer = new LocalDateTimeToUtcSerializer();
-        LocalDateTime dateTime = LocalDateTime.of(2024, 5, 10, 12, 0);
+        // Paris time: 17:30 on March 25, 2024 (before daylight saving kicks in)
+        LocalDateTime parisTime = LocalDateTime.of(2024, 3, 25, 17, 30);
 
-        StringWriter writer = new StringWriter();
-        JsonGenerator gen = mock(JsonGenerator.class);
+        // Use a real StringWriter to capture the output
+        StringWriter output = new StringWriter();
+        JsonGenerator gen = new com.fasterxml.jackson.core.json.JsonFactory().createGenerator(output);
         SerializerProvider provider = mock(SerializerProvider.class);
 
-        serializer.serialize(dateTime, gen, provider);
+        // Act
+        serializer.serialize(parisTime, gen, provider);
+        gen.close();
 
-        verify(gen, times(1)).writeString(anyString());
+        // Extract the resulting UTC time string
+        String result = output.toString().replace("\"", "");  // remove quotes from JSON string
+
+        // Expected UTC time: Paris is UTC+1 in March (before DST), so 17:30 -> 16:30 UTC
+        String expected = "2024-03-25T16:30:00Z";
+
+        // Assert
+        assertEquals(expected, result);
     }
 }
