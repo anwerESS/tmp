@@ -145,3 +145,27 @@ project-root/
 │           └── features/
 │               └── lux-global-detail.feature
 ```
+
+## Updated Feature: `04-global-detail.feature`
+
+```gherkin
+Scenario Outline: Check entity for Global/Detail / ETR RL flow for instruction on LUX entity
+  Given a random common pool id
+  And a global swift "<global_swift>" for functional case: "<functional_case>"
+  And a detail swift "<detail1_swift>" for functional case: "<functional_case>"
+  And a detail swift "<detail2_swift>" for functional case: "<functional_case>"
+  And the MX "<market_msg>" from the market for the common pool
+  When I replace the SEME fields with a random unique reference in each swift
+  And I replace the PoolId fields with the common pool id in each swift
+  And I make a POST request to /api/v1/messages/receive-mx with the global-detail pack
+  Then the instruction must be sent to the market
+  And the instruction sent to the market should get the "<expected_typeGd>"
+  And the client cash account value inside the MX swift must correspond to the expected "<clientCashAccount>" from the example
+  And the liaison cash account value inside the MX swift must correspond to the expected "<liaisonCashAccount>" from the example
+  And event report "<event_report_type_54x>" have been generated for initial entity "<originatorEntity>" and for intermediate entity "<intermediateEntity>"
+
+Examples:
+  | functional_case                          | clientBIC      | global_swift                                                | detail1_swift                                             | detail2_swift                                              |
+  | e2e/cas286-541-EOC-LUX-GD                | SOGEFRPPAAA    | e2e/cas286-541-EOC-LUX-GD/MT541-Client-Globale.txt         | e2e/cas286-541-EOC-LUX-GD/MT541_Client_Detail1.txt        | e2e/cas286-541-EOC-LUX-GD/MT541_Client_detail2.txt         |
+  | e2e/cas287-543-SIC-LUX-GD                | AUMRFRPPXXX    | e2e/cas287-543-SIC-LUX-GD/MT543_Client_globale.txt         | e2e/cas287-543-SIC-LUX-GD/MT543_Client_detail1_001.txt    | e2e/cas287-543-SIC-LUX-GD/MT543_Client_detail2_001.txt     |
+```
