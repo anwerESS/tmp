@@ -1,0 +1,53 @@
+Aide-moi à diagnostiquer et corriger un échec du job GitLab CI `sonar_check` sur le projet `squid-frontend`.
+
+Réponds en français et explique tes conclusions simplement. Pour cette première étape, analyse les fichiers et propose un correctif, sans modifier de fichier, installer d’outil, faire de commit/push ou lancer de déploiement.
+
+Contexte :
+- Le check Sonar fonctionnait auparavant.
+- Deux dépôts locaux sont disponibles : `squid-frontend` et `squid_cicd_templates`.
+- Le pipeline parent du frontend déclenche un pipeline enfant défini dans `ci-templates/.gitlab-ci-dev.yml`.
+- Le pipeline enfant inclut `.gitlab-squid-common.yml` du dépôt `squid_cicd_templates`, avec `ref: main`.
+- Le module frontend s’appelle `SquidAIFrontend`.
+- Le job `build` réussit, mais `sonar_check` échoue avant l’analyse du code.
+- Le pipeline observé utilise la branche `fix/pipeline_tmp`, commit `62af1e38`. Vérifie la branche et les modifications locales actuelles avant toute comparaison.
+
+Éléments visibles dans le log échoué :
+- Image Node : `node:22.22.0-alpine`, via le registre interne.
+- Node : 22.22.0 ; npm : 10.9.4.
+- Commande : `npx -y @sonar/scan $SONAR_SCANNER_OPTS`.
+- SonarScanner for NPM : 5.0.2.
+- SonarQube Server : 2026.1.2.
+- Le téléchargement automatique du JRE et du moteur Sonar réussit.
+- Le moteur démarre avec Java 21.0.9.
+- L’échec arrive à l’étape `Load global settings`, sur `/sonarqube/api/settings/values.protobuf`.
+
+Erreurs finales :
+`javax.net.ssl.SSLHandshakeException: (certificate_unknown) The certificate chain is not trusted`
+`PKIX path building failed`
+`SunCertPathBuilderException: unable to find valid certification path to requested target`
+
+Configuration à vérifier dans les fichiers :
+- `NODE_EXTRA_CA_CERTS` pointe vers `certs/trusty_bundle.pem`.
+- `JAVA_TOOL_OPTIONS` contient `-Djavax.net.ssl.trustStore=.../certs/cacerts`.
+- Le log confirme que Java reçoit `JAVA_TOOL_OPTIONS`.
+- Le before_script vérifie que ces fichiers existent et ne sont pas vides.
+- npm possède aussi des réglages de registre, proxy, cafile et strict-ssl.
+
+Travail demandé :
+1. Lis le job `sonar_check`, ses variables, ses éventuels héritages et le template partagé. Distingue ce qui est réellement utilisé par ce job des autres jobs.
+2. Confirme le point exact de l’échec. Distingue le bootstrap Node.js du moteur Java.
+3. Vérifie les chemins des certificats, les options réellement transmises au scanner et les configurations de proxy.
+4. Si les outils nécessaires sont disponibles, propose ou réalise uniquement des inspections locales en lecture seule des certificats : format, émetteurs, dates de validité et contenu du truststore. N’affiche aucun secret et ne suppose pas son mot de passe.
+5. Consulte l’historique Git local pour repérer les changements pertinents : job Sonar, image, dépendances et fichiers de certificats. Ne désigne pas un ancien commit comme fonctionnel sans preuve d’un pipeline réussi.
+6. Évalue la configuration PKCS#12 avec `sonar.scanner.truststorePath` et `sonar.scanner.truststorePassword`, adaptée à la version du scanner. Ne suppose pas qu’une conversion de format suffira : il faut aussi les bonnes autorités de certification.
+7. Ne propose pas de désactiver la validation TLS comme solution.
+8. Propose le plus petit correctif possible, en privilégiant le job frontend si une modification du template partagé n’est pas nécessaire.
+
+Présente :
+- les faits confirmés, avec les fichiers/lignes ou extraits de logs ;
+- les hypothèses restant à vérifier ;
+- le diff proposé et ses prérequis ;
+- les étapes de validation dans GitLab ;
+- les informations manquantes.
+
+Ne conclus pas que le problème est résolu avant une exécution réussie. Si tu ne peux pas accéder à GitLab ou au serveur Sonar interne, indique précisément ce que je dois récupérer ou exécuter.
