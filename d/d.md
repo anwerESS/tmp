@@ -1,18 +1,10 @@
-Je pars du principe que tu parles d’un **projet Angular**. Remplace les éléments entre crochets par les informations exactes.
+**Message à envoyer :**
 
-**Message à envoyer**
+Bonjour, j’aurais besoin des droits administrateur sur mon poste pour exécuter les scripts indiqués dans le fichier README de l’application. Pourriez-vous m’accorder les droits nécessaires ? Merci.
 
-Bonjour,
+**Pour le formulaire et le fichier Excel :**
 
-Pour travailler sur le projet Angular [nom du projet], j’aurais besoin d’une élévation de privilèges sur mon poste [identifiant du poste], notamment pour exécuter certains scripts et effectuer les opérations de configuration qui nécessitent des droits administrateur.
-
-Pourriez-vous m’accorder les droits adaptés à ce besoin ?
-
-Merci pour votre aide.
-
-**Dans le champ « Spécifier vos besoins »**
-
-Demande d’élévation de privilèges pour le poste [identifiant du poste], dans le cadre du développement du projet Angular [nom du projet]. Ce besoin concerne l’exécution des scripts [noms des scripts] et les opérations suivantes nécessitant des droits administrateur : [opérations précises].
+Demande de droits administrateur sur le poste [identifiant du poste] pour exécuter les scripts décrits dans le fichier README de l’application, nécessaires à la configuration de mon environnement de développement.
 
 **Dans le fichier Excel — « Description + lists »**
 
