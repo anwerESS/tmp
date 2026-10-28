@@ -1,4 +1,8 @@
+J’ai besoin de droits administrateur sur mon poste CSFRM1P2592246 pour configurer mon environnement de développement :
+- Exécuter les scripts décrits dans le fichier README de l’application, notamment le script PowerShell ConfigureNpm.ps1.
+- Installer les outils suivants : DBeaver, Node.js, PyCharm, Redis Insight et S3 Browser, ainsi que Grafana et ses plugins et les extensions Visual Studio Code nécessaires.
 
+  ---
 J’ai besoin de droits administrateur sur mon poste [identifiant du poste] pour exécuter les scripts décrits dans le fichier README de l’application, notamment le script PowerShell ConfigureNpm.ps1, afin de configurer mon environnement de développement.
 ---
 
