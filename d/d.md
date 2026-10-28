@@ -1,3 +1,7 @@
+
+J’ai besoin de droits administrateur sur mon poste [identifiant du poste] pour exécuter les scripts décrits dans le fichier README de l’application, notamment le script PowerShell ConfigureNpm.ps1, afin de configurer mon environnement de développement.
+---
+
 **Message à envoyer :**
 
 Bonjour, j’aurais besoin des droits administrateur sur mon poste pour exécuter les scripts indiqués dans le fichier README de l’application. Pourriez-vous m’accorder les droits nécessaires ? Merci.
