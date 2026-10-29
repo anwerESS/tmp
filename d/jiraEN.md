@@ -24,8 +24,8 @@ I sent him a message asking if he could point us to the team that manages the So
 
 
 “Regarding the 1275 about implementing alerts for the data transformer in Elasticsearch, ...”
-“I’ve started looking into the ticket and how we could set up alerts using the existing logs.
-To move forward, it would help to look at a real example together, or reproduce an error in a test environment.
+“I’ve started looking into the ticket and how we could set up alerts using the existing logs.  
+To move forward, it would help to look at a real example together, or reproduce an error in a test environment.  
 That would help me understand what we need to detect and which alerts to set up."
 
 That’s it from my side.  
