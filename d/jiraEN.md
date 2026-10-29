@@ -19,6 +19,10 @@ We need to contact the team managing SonarQube to check whether the migration is
 
 for the timeout issue, I’m still waiting for some software installations and admin rights so I can run the application and start debugging.
 
+
+I sent him a message asking if he could point us to the team that manages the Sonar server. I’m waiting for his reply.
+
+
 “Regarding the 1275 about implementing alerts for the data transformer in Elasticsearch, ...”
 “I’ve started looking into the ticket and how we could set up alerts using the existing logs.
 To move forward, it would help to look at a real example together, or reproduce an error in a test environment.
