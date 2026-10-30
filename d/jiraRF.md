@@ -19,3 +19,7 @@ Je n’ai pas encore eu le temps de regarder, mais si c’est prioritaire, je pe
 S’ils demandent pour les pipelines :
 
 Il faut contacter l’équipe qui gère SonarQube pour voir si le problème est lié à la migration et ce qu’on doit mettre à jour de notre côté.
+
+
+Vincent, do you know which team manages the SonarQube servers? We’re having a certificate validation issue in the SQUID AI GitLab pipeline and would like to check with them. Could you point us to the right contact? Thanks!
+
