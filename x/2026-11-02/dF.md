@@ -19,7 +19,11 @@ Dès que j’ai une réponse, je regarde avec eux comment résoudre le problème
 
 Pour le daily, tu peux dire ça de manière simple, naturelle et professionnelle :
 
-> Concernant les installations des logiciels, j'ai fait un point avec Mohamed tout à l'heure.Il m'a expliqué qu'une fois le ticket clôturé, il faut aller dans Software Center pour installer le logiciel demandé.Au début, je ne connaissais pas cette procédure. Je pensais que l'installation se faisait automatiquement.Et quand j'avais appelé le support technique, on m'avait dit que je n'avais pas utilisé le bon formulaire. Mais apparemment, la personne que j'ai eue au téléphone ne connaissait pas bien la procédure pour les postes MoWe.Donc finalement, mes demandes étaient bien faites. C'est juste que je ne savais pas qu'il fallait passer par Software Center après la clôture des tickets.Voilà, maintenant c'est plus clair.
+> Concernant les installations des logiciels, j'ai fait un point avec Mohamed tout à l'heure.
+> Il m'a expliqué qu'une fois le ticket clôturé, il faut aller dans Software Center pour installer le logiciel demandé.
+> Au début, je ne connaissais pas cette procédure. Je pensais que l'installation se faisait automatiquement.
+> Et quand j'avais appelé le support technique, on m'avait dit que je n'avais pas utilisé le bon formulaire. Mais apparemment, la personne que j'ai eue au téléphone ne connaissait pas bien la procédure pour les postes MoWe.
+> Donc finalement, mes demandes étaient bien faites. C'est juste que je ne savais pas qu'il fallait passer par Software Center après la clôture des tickets.Voilà, maintenant c'est plus clair.
 
 Quelques expressions naturelles à retenir :
 
