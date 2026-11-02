@@ -1,7 +1,12 @@
-De mon côté, rien de particulier à ajouter sur la partie LEGAL pour le moment.
+De mon côté, rien de particulier à ajouter sur la partie LEGAL pour le moment.  
 
-J'attends toujours quelques installations et certains accès, notamment les droits d'admin.
+Je viens de résoudre le problème d'installation des logiciels. J'ai fait un point avec Mohamed ce matin.  
 
+Il m'a expliqué que maintenant, les installations ne sont plus faites directement par le support. Une fois le ticket traité, le logiciel devient disponible dans le Centre logiciel, et c'est à nous de lancer l'installation.  
+
+Apparemment, comme c'est une nouvelle procédure, la personne que j'avais eue au téléphone au support n'était pas au courant. C'est pour ça qu'elle m'avait orienté vers un autre formulaire.  
+
+Du coup, là, je suis en train d'installer les logiciels. Il me reste juste les droits d'admin à récupérer.
 J'ai surtout avancé sur les sujets IGE, donc on en parlera tout à l'heure, Donatien, pendant le daily IGE.
 
 
@@ -37,3 +42,20 @@ Quelques expressions naturelles à retenir :
 * « Je ne savais pas qu'il fallait récupérer les logiciels dans Software Center. »
 
 * « Mohamed m'a expliqué la procédure tout à l'heure, donc maintenant c'est clair. »
+
+---
+
+Bonjour Claude, Olivier,
+
+J'ai fait un point avec Mohamed ce matin et le problème est résolu.
+
+Il m'a expliqué qu'avec la nouvelle procédure, une fois le ticket METIS traité, le logiciel devient disponible dans le Centre logiciel, et c'est à nous de lancer l'installation.
+
+Apparemment, le support que j'avais contacté n'était pas encore au courant de cette procédure, d'où la confusion.
+
+Je suis donc en train d'installer les logiciels.
+
+Merci à vous deux pour votre aide et votre suivi, ainsi qu'à Mohamed pour ses explications.
+
+Bonne journée,
+Anouar
