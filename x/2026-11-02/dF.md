@@ -78,3 +78,17 @@ Merci d’avance pour ton aide !
 Merci pour ton retour et pour la validation !
 
 Est-ce que je peux contacter directement l’une des personnes de la liste pour accélérer le traitement ? Je suis toujours bloqué pour avancer sur mes tâches.
+
+---
+
+Bonjour,
+
+Je me permets de te contacter concernant ma demande de droits administrateur ARM-NORM.10480460.1.
+
+La demande a déjà été validée et elle est actuellement en attente de traitement par l’équipe SA.
+
+Est-ce que tu pourrais regarder s’il est possible d’accélérer le traitement, s’il te plaît ?
+
+C’est assez urgent, car j’ai besoin de ces droits pour lancer l’application et avancer sur mes tâches.
+
+Merci d’avance pour ton aide !
