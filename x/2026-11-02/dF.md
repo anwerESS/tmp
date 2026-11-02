@@ -72,3 +72,9 @@ Bonjour Yoaan, je me permets de te relancer concernant ma demande de droits admi
 Est-ce que tu pourrais la valider dès que possible, s’il te plaît ? Je suis toujours bloqué pour lancer l’application et avancer sur mes tâches.
 
 Merci d’avance pour ton aide !
+
+---
+
+Merci pour ton retour et pour la validation !
+
+Est-ce que je peux contacter directement l’une des personnes de la liste pour accélérer le traitement ? Je suis toujours bloqué pour avancer sur mes tâches.
