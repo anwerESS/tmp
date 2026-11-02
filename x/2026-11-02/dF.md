@@ -61,3 +61,14 @@ Merci à vous deux pour votre aide et votre suivi, ainsi qu'à Mohamed pour ses 
 
 Bonne journée,
 Anouar
+
+
+
+---
+
+
+Bonjour Yoaan, je me permets de te relancer concernant ma demande de droits administrateur ARM-NORM10480460.1.
+
+Est-ce que tu pourrais la valider dès que possible, s’il te plaît ? Je suis toujours bloqué pour lancer l’application et avancer sur mes tâches.
+
+Merci d’avance pour ton aide !
