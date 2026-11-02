@@ -1,8 +1,6 @@
 On my end, on Friday, I had a session with Manel.  
 She showed me how to deploy SquidAI and walked me through a few tools.  
 
-I'm still waiting for some access and software installations.  
-
 
 <br>
 
