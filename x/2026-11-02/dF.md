@@ -6,7 +6,9 @@ Il m'a expliqué que maintenant, les installations ne sont plus faites directeme
 
 Apparemment, comme c'est une nouvelle procédure, la personne que j'avais eue au téléphone au support n'était pas au courant. C'est pour ça qu'elle m'avait orienté vers un autre formulaire.  
 
-Du coup, là, je suis en train d'installer les logiciels. Il me reste juste les droits d'admin à récupérer.
+Du coup, là, je suis en train d'installer les logiciels. Il me reste juste les droits d'admin à récupérer.  
+
+
 J'ai surtout avancé sur les sujets IGE, donc on en parlera tout à l'heure, Donatien, pendant le daily IGE.
 
 
