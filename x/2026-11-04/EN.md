@@ -40,3 +40,14 @@ Do you know which team I should contact to get my IT profile created or to resol
 I need admin rights to install tools and run my applications.
 
 Thanks for your help!
+
+
+
+---
+
+
+Bonjour Claude,
+
+J’ai contacté Shreya concernant le refus de ma demande de droits d’admin. Elle m’a expliqué que mon profil IT n’est pas encore disponible sur Mowe CACIB et m’a conseillé de contacter le Helpdesk CACIB.
+
+Tu sais comment je peux contacter cette équipe ?
