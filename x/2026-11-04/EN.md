@@ -15,3 +15,14 @@ That's it from my side.
  I’ve started looking into the ticket and how we could set up alerts using the existing logs.  
  To move forward, it would help to look at a real example together, or reproduce an error in a test environment.
  That would help me understand what we need to detect and which alerts to set up."
+
+
+
+
+Hi Shreya,
+
+I'm contacting you regarding my admin rights request (CSFRM1P2592246), which was rejected with the following reason: "There is no IT profile on Mowe CACIB yet."
+
+I'm not sure I understand the reason for the rejection. Could you please explain what exactly is missing and what I need to do to resolve this issue?
+
+Thanks in advance for your help!
