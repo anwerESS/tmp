@@ -26,3 +26,17 @@ I'm contacting you regarding my admin rights request (CSFRM1P2592246), which was
 I'm not sure I understand the reason for the rejection. Could you please explain what exactly is missing and what I need to do to resolve this issue?
 
 Thanks in advance for your help!
+
+
+
+Shreya t'explique que ton profil IT n'est pas encore disponible dans Mowe CACIB et que son équipe gère uniquement les ordinateurs du périmètre PARIS.
+
+Tu peux lui demander qui contacter pour résoudre le problème.
+
+Thanks for the clarification.
+
+Do you know which team I should contact to get my IT profile created or to resolve this issue?
+
+I need admin rights to install tools and run my applications.
+
+Thanks for your help!
