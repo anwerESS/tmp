@@ -9,3 +9,13 @@ Donatien, on pourra en discuter plus en détail tout à l’heure pendant le dai
 Voilà, c’est tout pour moi.
 
 ---
+Bonjour Donatien,
+
+Concernant Squid AI, les analyses SonarQube sont actuellement bloquées par un problème de certificat lors de la connexion au serveur.
+
+Nous avons envoyé un mail aux équipes concernées et les avons relancées. Nous attendons leur retour pour résoudre ce problème et pouvoir relancer les analyses afin d’obtenir des résultats à jour.
+
+Par ailleurs, à ma connaissance, Xray n’est pas utilisé sur Squid AI. Ce point reste à confirmer avec l’équipe.
+
+Cordialement,
+Anouar
