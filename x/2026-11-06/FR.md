@@ -19,3 +19,10 @@ Par ailleurs, à ma connaissance, Xray n’est pas utilisé sur Squid AI. Ce poi
 
 Cordialement,
 Anouar
+
+---
+Ce matin, je n’ai pas pu venir sur site à cause d’un problème de bus.
+Comme hier, j’ai attendu à l’arrêt, mais aucun bus n’est passé.
+Après, j’ai regardé sur le site de la RATP et j’ai vu que les lignes étaient déviées à cause de travaux.
+Comme la gare d’Argenteuil est à environ 40 minutes à pied, j’ai préféré rentrer chez moi pour ne pas rater le daily.
+
