@@ -1,0 +1,54 @@
+Tu peux indiquer que **le test de déclenchement et d’envoi du mail a réussi**, puis préciser les critères à valider pour finaliser l’alerte.
+
+Sur tes captures, la requête couvre le namespace PROD et le mail reçu concerne **`squid-api-gateway`**, avec un message de niveau `WARNING` contenant « Error ». Il reste donc à affiner le filtre pour cibler les échecs du **Data Transformer**.
+
+**Commentaire à ajouter dans Jira, en anglais**
+
+> Initial alerting test completed successfully.
+>
+> - Created an email connector using existing SMTP settings.
+> - Created the test rule `TEST: SQU1-1275` using production logs.
+> - Successfully received an alert email containing event details and a link to Kibana.
+>
+> The test used a broad query across the production namespace. The received notification concerned `squid-api-gateway`. The query still needs to be refined to target the relevant Data Transformer failures.
+>
+> Before finalising the rule, we need to agree on:
+>
+> - The error types and processing failures to monitor.
+> - The alert threshold and time window.
+> - The email recipients or team distribution list.
+> - The notification frequency and how to avoid repeated emails for the same incident.
+>
+> Next step: refine the query and validate the rule against representative Data Transformer incidents.
+
+**Captures à joindre**
+
+Je joindrais ces trois captures, qui montrent la configuration et le résultat du test :
+
+- **Le mail reçu** — preuve que la notification est bien arrivée.
+- **La définition de la règle `TEST: SQU1-1275`** — requête, seuil et fenêtre de temps utilisés.
+- **L’action email** — destinataire de test et contenu de la notification.
+
+La liste des connecteurs est facultative. La capture des explications de l’assistant n’apporte pas de preuve supplémentaire.
+
+**Pour le daily IGE — version naturelle**
+
+“On my side, I’ve made progress on the Data Transformer alerts. I created an email connector using the existing SMTP settings and set up a test rule in Kibana. The test worked, and I received the email.
+
+For this initial test, I used a broader query on the production logs. The next step is to narrow it down to the relevant Data Transformer errors.
+
+We still need to agree on the error types, the threshold, the time window and who should receive the emails. We also need to decide how often to send notifications.
+
+Today, I’ll start looking into the ‘Create dashboard’ ticket. I’m still waiting for my new PC before I can start development, but in the meantime, I’ll review the requirements and the existing code to understand what needs to be implemented.
+
+That’s all from me.”
+
+**Version plus courte**
+
+“The alerting test worked. I configured an email connector and a test rule in Kibana, and I successfully received an email.
+
+I now need to refine the filter for the Data Transformer and confirm the error types, the threshold and the recipients with the team.
+
+Today, I’ll start reviewing the ‘Create dashboard’ ticket. While I’m waiting for my new PC, I’ll look through the requirements and the code to prepare for the development work.
+
+That’s all from me.”
