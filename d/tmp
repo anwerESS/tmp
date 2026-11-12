@@ -1,53 +1,943 @@
-Aide-moi à diagnostiquer et corriger un échec du job GitLab CI `sonar_check` sur le projet `squid-frontend`.
+SPK_1
+0:01
+Par rapport à ce qu'on s'est dit la dernière réunion.
 
-Réponds en français et explique tes conclusions simplement. Pour cette première étape, analyse les fichiers et propose un correctif, sans modifier de fichier, installer d’outil, faire de commit/push ou lancer de déploiement.
+SPK_1
+0:05
+Donc, on peut commencer.
 
-Contexte :
-- Le check Sonar fonctionnait auparavant.
-- Deux dépôts locaux sont disponibles : `squid-frontend` et `squid_cicd_templates`.
-- Le pipeline parent du frontend déclenche un pipeline enfant défini dans `ci-templates/.gitlab-ci-dev.yml`.
-- Le pipeline enfant inclut `.gitlab-squid-common.yml` du dépôt `squid_cicd_templates`, avec `ref: main`.
-- Le module frontend s’appelle `SquidAIFrontend`.
-- Le job `build` réussit, mais `sonar_check` échoue avant l’analyse du code.
-- Le pipeline observé utilise la branche `fix/pipeline_tmp`, commit `62af1e38`. Vérifie la branche et les modifications locales actuelles avant toute comparaison.
+SPK_1
+0:08
+Je crois qu'on est au complet.
 
-Éléments visibles dans le log échoué :
-- Image Node : `node:22.22.0-alpine`, via le registre interne.
-- Node : 22.22.0 ; npm : 10.9.4.
-- Commande : `npx -y @sonar/scan $SONAR_SCANNER_OPTS`.
-- SonarScanner for NPM : 5.0.2.
-- SonarQube Server : 2026.1.2.
-- Le téléchargement automatique du JRE et du moteur Sonar réussit.
-- Le moteur démarre avec Java 21.0.9.
-- L’échec arrive à l’étape `Load global settings`, sur `/sonarqube/api/settings/values.protobuf`.
+SPK_1
+0:12
+Merci de participer à la réunion.
 
-Erreurs finales :
-`javax.net.ssl.SSLHandshakeException: (certificate_unknown) The certificate chain is not trusted`
-`PKIX path building failed`
-`SunCertPathBuilderException: unable to find valid certification path to requested target`
+SPK_1
+0:16
+Je voulais discuter des sujets par rapport à la migration chez Raccord.
 
-Configuration à vérifier dans les fichiers :
-- `NODE_EXTRA_CA_CERTS` pointe vers `certs/trusty_bundle.pem`.
-- `JAVA_TOOL_OPTIONS` contient `-Djavax.net.ssl.trustStore=.../certs/cacerts`.
-- Le log confirme que Java reçoit `JAVA_TOOL_OPTIONS`.
-- Le before_script vérifie que ces fichiers existent et ne sont pas vides.
-- npm possède aussi des réglages de registre, proxy, cafile et strict-ssl.
+SPK_1
+0:22
+La dernière fois, on s'est vu, on s'est parlé de cette migration.
 
-Travail demandé :
-1. Lis le job `sonar_check`, ses variables, ses éventuels héritages et le template partagé. Distingue ce qui est réellement utilisé par ce job des autres jobs.
-2. Confirme le point exact de l’échec. Distingue le bootstrap Node.js du moteur Java.
-3. Vérifie les chemins des certificats, les options réellement transmises au scanner et les configurations de proxy.
-4. Si les outils nécessaires sont disponibles, propose ou réalise uniquement des inspections locales en lecture seule des certificats : format, émetteurs, dates de validité et contenu du truststore. N’affiche aucun secret et ne suppose pas son mot de passe.
-5. Consulte l’historique Git local pour repérer les changements pertinents : job Sonar, image, dépendances et fichiers de certificats. Ne désigne pas un ancien commit comme fonctionnel sans preuve d’un pipeline réussi.
-6. Évalue la configuration PKCS#12 avec `sonar.scanner.truststorePath` et `sonar.scanner.truststorePassword`, adaptée à la version du scanner. Ne suppose pas qu’une conversion de format suffira : il faut aussi les bonnes autorités de certification.
-7. Ne propose pas de désactiver la validation TLS comme solution.
-8. Propose le plus petit correctif possible, en privilégiant le job frontend si une modification du template partagé n’est pas nécessaire.
+SPK_1
+0:28
+On s'est dit qu'on va voir la pertinence.
 
-Présente :
-- les faits confirmés, avec les fichiers/lignes ou extraits de logs ;
-- les hypothèses restant à vérifier ;
-- le diff proposé et ses prérequis ;
-- les étapes de validation dans GitLab ;
-- les informations manquantes.
+SPK_1
+0:31
+J'ai regardé aussi avec Nicolas Joté qui est responsable de Gérard dans la banque, il me disait qu'il faut voir s'il n'y a pas de vulnérabilité à traiter sur la version 8 et si c'est le cas il faut la monter, s'il y a des patchs pour ça.
 
-Ne conclus pas que le problème est résolu avant une exécution réussie. Si tu ne peux pas accéder à GitLab ou au serveur Sonar interne, indique précisément ce que je dois récupérer ou exécuter.
+SPK_1
+0:47
+Pour lui, à sa connaissance, il disait qu'ils n'existent pas et plutôt ça existe pour la version 9.
+
+SPK_1
+1:00
+Voilà, c'est le statut, ouais.
+
+SPK_2
+1:05
+Ok, ben alors...
+
+SPK_2
+1:07
+J'ai pas...
+
+SPK_2
+1:10
+C'est...
+
+SPK_2
+1:11
+D'accord, oui, mais ok.
+
+SPK_2
+1:15
+Qu'il y a des patchs pour la version 9, s'il y a des vulnérabilités, c'est ça qu'il dit?
+
+SPK_1
+1:18
+Oui, c'est ça.
+
+SPK_1
+1:19
+Il a trouvé des vulnérabilités dans la version 9, il a fait des patchs, et il me disait, regardez la version 8 s'il y avait des patchs qui existent pour celle-là.
+
+SPK_1
+1:26
+Il est presque sûr que ça n'existe pas et qu'il va falloir qu'on remonte en version pour pouvoir patcher quand même, en attendant la migration vers le cloud.
+
+SPK_1
+1:38
+Mais pour le moment, il faut qu'on fasse attention par rapport à ça.
+
+SPK_1
+1:42
+Et voilà, si on l'a fait, nous prenons l'heure pour faire les actions.
+
+SPK_1
+1:48
+Anwar, il nous représente pour la partie technique et moi sur la partie fonctionnelle, bien sûr.
+
+SPK_1
+1:56
+Participer à tout ce qui est organisation.
+
+SPK_2
+2:01
+OK, d'accord.
+
+SPK_2
+2:04
+OK, ben du coup, tu as eu plus d'infos que moi, parce que...
+
+SPK_1
+2:10
+C'est normal, on reprend.
+
+SPK_1
+2:12
+C'est cool, c'est normal.
+
+SPK_1
+2:14
+Nous, on a peur de...
+
+SPK_1
+2:17
+Qu'est-ce qu'on va prendre?
+
+SPK_2
+2:19
+Ouais, ouais.
+
+SPK_3
+2:22
+OK.
+
+SPK_1
+2:23
+Donc, on s'organise pour faire cette migration.
+
+SPK_1
+2:31
+Je peux lancer même des réunions.
+
+SPK_1
+2:34
+Vous me dites, c'est quoi les next steps pour faire ça?
+
+SPK_1
+2:37
+Nicolas n'hésite pas à me contacter.
+
+SPK_2
+2:41
+Sur la migration, Nicolas, vous avez donné les...
+
+SPK_2
+2:48
+Normalement, On peut repartager.
+
+SPK_2
+2:51
+Normalement, Nicolas, t'avais partagé.
+
+SPK_2
+2:53
+C'est quoi les différentes étapes de la migration, pour faire une migration?
+
+SPK_3
+2:58
+Oui, oui, oui.
+
+SPK_2
+3:00
+Ouais.
+
+SPK_1
+3:01
+Ouais, change.
+
+SPK_1
+3:02
+Oui, j'ai ça.
+
+SPK_2
+3:04
+Ouais, voilà.
+
+SPK_1
+3:05
+OK.
+
+SPK_1
+3:06
+Anwar, t'as eu le temps de nous rejoindre?
+
+SPK_4
+3:11
+Oui, oui.
+
+SPK_4
+3:11
+J'étais à Noé.
+
+SPK_1
+3:15
+Je t'ai envoyé le lien, regarde si tu as accès.
+
+SPK_1
+3:17
+Je crois que tout le monde a accès à cette page.
+
+SPK_1
+3:20
+Et donc du coup, regarde et voilà.
+
+SPK_1
+3:24
+Et si tu as besoin de quoi que ce soit pour...
+
+SPK_1
+3:26
+Enfin, question d'accès ou quoi que ce soit, tu demandes à Nicolas et à moi.
+
+SPK_3
+3:30
+Je vais surtout voir quels plugins vous voulez récupérer aussi.
+
+SPK_1
+3:34
+Oui, j'ai mis la liste dans le compte rendu, si tu te rappelles.
+
+SPK_1
+3:39
+Alors, je reviens.
+
+SPK_1
+3:41
+Voilà, c'est ça les plugins.
+
+SPK_1
+3:43
+J'ai su Automation, Jira Workflow, Toolbox et Quantega c'est ça.
+
+SPK_4
+3:48
+D'accord, donc on a trois plugins, ok.
+
+SPK_1
+3:53
+Je remettrai ça dans les points, comme ça.
+
+SPK_1
+4:13
+Ok.
+
+SPK_1
+4:15
+Donc là, c'est le plugin qu'on va faire.
+
+SPK_1
+4:18
+Pour la migration Thrusty, je t'ai contacté en dehors de la réunion parce que j'avais oublié le point.
+
+SPK_1
+4:25
+Enfin, je n'étais pas au courant.
+
+SPK_1
+4:27
+C'est en discutant avec les anciens de l'équipe qui nous ont dit qu'il y a déjà eu un problème par rapport à ça.
+
+SPK_1
+4:35
+Donc, tu me disais que tu t'attendais les certificats pour passer à un produit et tu étais en HTTPS.
+
+SPK_1
+4:40
+Tu as relancé.
+
+SPK_1
+4:42
+Est-ce que tu as eu quelque chose en plus?
+
+SPK_3
+4:44
+En UAT, normalement, tout est OK.
+
+SPK_1
+4:47
+Ah bon?
+
+SPK_1
+4:48
+Et ses sons?
+
+SPK_3
+4:49
+Oui, oui, oui.
+
+SPK_3
+4:51
+Après, il faut être dans Jira.
+
+SPK_3
+4:54
+Il faut avoir un utilisateur dans Jira.
+
+SPK_2
+4:58
+Oui.
+
+SPK_2
+4:59
+Est-ce que tu as été…?
+
+SPK_1
+5:01
+Moi, j'ai mon profil….
+
+SPK_3
+5:07
+Parce que c'est des licences par utilisateur,.
+
+SPK_1
+5:09
+Donc...
+
+SPK_1
+5:09
+Ouais, j'ai en prod, mais j'ai peut-être pas en UAT.
+
+SPK_1
+5:13
+En UAT, oui.
+
+SPK_2
+5:17
+Ok, je peux regarder pour...
+
+SPK_2
+5:20
+Attends, je vais regarder.
+
+SPK_3
+5:23
+En prod, on a fait les demandes.
+
+SPK_3
+5:26
+Ils ne nous l'ont toujours pas envoyé.
+
+SPK_3
+5:28
+Je vais peut-être les relancer.
+
+SPK_2
+5:30
+Ouais, là-dessus, tu dis que c'est super urgent.
+
+SPK_2
+5:34
+Enfin, je comprends pas que sur un...
+
+SPK_2
+5:36
+Le sujet, c'est super urgent, les certificats de trustee.
+
+SPK_2
+5:42
+Je comprends pas qu'ils mettent autant de temps à nous répondre pour obtenir un pas de certificat.
+
+SPK_2
+5:51
+Il y a une décorrélation entre ce qu'on nous demande et derrière, les équipes répondent pas pour nous fournir les certificats.
+
+SPK_5
+6:02
+C'est.
+
+SPK_2
+6:09
+Quoi le...
+
+SPK_2
+6:12
+Tu peux m'envoyer le nom du mail, s'il te plaît?
+
+SPK_2
+6:15
+Je vais répondre dessus.
+
+SPK_3
+6:19
+C'est un métis, je vais te l'envoyer.
+
+SPK_2
+6:23
+Ah oui, ok.
+
+SPK_2
+6:27
+Et c'est à...
+
+SPK_2
+6:32
+Et du coup, les certificats de ceux-là, c'est quelle équipe qui nous les donne?
+
+SPK_3
+6:39
+Alors, l'équipe du certificat, je ne sais pas qui.
+
+SPK_3
+6:47
+J'ai fait le métis, après certificat, point de contact, JIT-CMI, JET-Support Team, JIT-ITFR.
+
+SPK_3
+6:58
+Je n'ai que ça.
+
+SPK_2
+7:02
+Pour la.
+
+SPK_3
+7:20
+Mise en place en prod, je ne sais pas si je pourrais le faire moi, donc on va voir avec eux aussi.
+
+SPK_3
+7:25
+Moi j'ai fait une doc.
+
+SPK_1
+7:30
+Ok.
+
+SPK_3
+7:31
+Est-ce qu'il faut modifier les configs sur le serveur?
+
+SPK_5
+7:35
+Voilà.
+
+SPK_5
+7:44
+Ok.
+
+SPK_1
+7:54
+Et ça c'est pas très important, enfin pas important pour le moment par rapport à la purge dont on a parlé.
+
+SPK_1
+8:01
+Vous me dites comment c'est fait et voilà.
+
+SPK_2
+8:05
+Ouais, on vous tient au courant.
+
+SPK_1
+8:08
+Ouais, ça marche.
+
+SPK_2
+8:11
+Attends, je te crée ton user du coup.
+
+SPK_1
+8:16
+En UAT.
+
+SPK_2
+8:17
+En UAT, ouais.
+
+SPK_1
+8:19
+Mais je crois que j'ai aussi un problème, j'arrivais pas à...
+
+SPK_1
+8:24
+Accéder à plusieurs sites aujourd'hui.
+
+SPK_1
+8:27
+Enfin, à plusieurs applications.
+
+SPK_1
+8:30
+Je ne sais pas ce qui se passe parce que je suis à la maison peut-être.
+
+SPK_1
+8:33
+Je revéifie tout ça jeudi sur site.
+
+SPK_1
+8:39
+Sinon, je vais créer un ticket pour voir qu'est-ce qui se passe.
+
+SPK_2
+8:54
+Tu peux me donner ton UT, s'il te plaît?
+
+SPK_1
+8:57
+Oui, je l'envoie sur l'adresse.
+
+SPK_4
+8:59
+Merci.
+
+SPK_5
+9:11
+Voilà,.
+
+SPK_2
+9:32
+Je t'ai créé.
+
+SPK_2
+9:32
+Donc là, normalement, avec le SSO, ça devrait marcher.
+
+SPK_2
+9:37
+Par contre, Nicolas, Quand je me connecte à l'UAT, moi, j'ai le message...
+
+SPK_2
+9:44
+Ah, c'est parce que mon raccourci, il est...
+
+SPK_2
+9:48
+Sur le HTTPS.
+
+SPK_2
+9:51
+Oui.
+
+SPK_2
+9:52
+Il faut que je le change.
+
+SPK_2
+9:56
+Modifier.
+
+SPK_2
+9:57
+C'est quoi?
+
+SPK_2
+9:58
+C'est la même URL, mais avec HTTPS...
+
+SPK_3
+10:02
+Je crois...
+
+SPK_3
+10:04
+Je vais vérifier.
+
+SPK_3
+10:05
+Je crois.
+
+SPK_3
+10:11
+C'est sans le port, c'est juste ça.
+
+SPK_2
+10:18
+Ah, faut enlever le port, ok.
+
+SPK_3
+10:23
+Là, tu y es, là.
+
+SPK_3
+10:24
+Oui, c'est bon.
+
+SPK_3
+10:28
+Là, tu fais du sign-on.
+
+SPK_2
+10:29
+C'est pas moi qui est partout.
+
+SPK_2
+10:32
+C'est bon.
+
+SPK_2
+10:33
+Non, mais c'est bon, je suis dessus quand même.
+
+SPK_2
+10:37
+Ok, c'est juste que...
+
+SPK_2
+10:45
+C'était l'ancien, donc c'est pour ça.
+
+SPK_2
+10:47
+Donc c'est bon, ça fonctionne, ouais.
+
+SPK_2
+10:49
+Ok, super.
+
+SPK_3
+10:50
+Oui, c'était juste HTTPS qui bloquait, là.
+
+SPK_1
+10:53
+Moi, il y a quelque chose qui ne marche pas.
+
+SPK_1
+10:57
+Je vous envoie un email jeudi, une fois sur site, pour vous dire si ça marche ou pas, parce que je sous-entends un autre problème, ça n'a rien à voir avec...
+
+SPK_1
+11:09
+Ok.
+
+SPK_2
+11:12
+Ton grant, c'est bon, il est validé?
+
+SPK_2
+11:15
+Je ne l'ai pas regardé en fait.
+
+SPK_1
+11:17
+Oui, oui, oui.
+
+SPK_1
+11:19
+Est-ce que je dois faire un grantary aussi pour accéder peut-être?
+
+SPK_2
+11:26
+Ah, ben oui, mais sur l'environnement test.
+
+SPK_2
+11:28
+Oui, oui.
+
+SPK_1
+11:31
+Alors, je vais voir.
+
+SPK_2
+11:32
+En fait, oui, je suis en train de...
+
+SPK_2
+11:35
+Oui, sur l'environnement de test, c'est du grand tarif, oui.
+
+SPK_3
+11:38
+Il en faut un pour UAT et un pour Prada.
+
+SPK_1
+11:42
+Check.
+
+SPK_2
+11:43
+Oui, ben oui, oui, tu as raison.
+
+SPK_1
+11:46
+Intégration.
+
+SPK_5
+11:58
+C'est.
+
+SPK_1
+12:05
+Quoi le code de l'application si vous avez en tête?
+
+SPK_2
+12:10
+J'ai l'écran devant moi.
+
+SPK_2
+12:15
+C'est J-R-A-C-O-R J-R-A-C-O-R.
+
+SPK_2
+12:22
+Oui, j'arrive pas à.
+
+SPK_1
+12:23
+Trouver, s'il y a un problème.
+
+SPK_1
+12:24
+Alors, moi aujourd'hui, j'ai pas de chance.
+
+SPK_1
+12:28
+U-T-3-R-8-U.
+
+SPK_1
+12:30
+Plusieurs outils ne marchent pas pour moi.
+
+SPK_2
+12:32
+Donc J-R...
+
+SPK_2
+12:34
+Non, J-R-R-A.
+
+SPK_1
+12:37
+Il n'y a pas le...
+
+SPK_1
+12:38
+Ah oui, voilà, voilà.
+
+SPK_2
+12:40
+Là, je te l'ai copié dans le...
+
+SPK_2
+12:41
+Voilà, c'est ça.
+
+SPK_1
+12:42
+Merci.
+
+SPK_1
+12:43
+Et il y a des profils...
+
+SPK_1
+12:46
+Il y a Admin, c'est ça?
+
+SPK_1
+12:47
+Admin IT?
+
+SPK_1
+12:48
+Oui.
+
+SPK_1
+12:50
+Super, c'est bon et du coup quand le batch passera, j'aurai...
+
+SPK_1
+12:54
+Ouais, normalement là,.
+
+SPK_2
+12:56
+Tu devrais avoir accès, ouais.
+
+SPK_1
+12:59
+Ouais, donc je reteste l'authentification, j'irai sur l'UAT, user sign-on quand ce sera effectif, et puis sur la prod, j'attends votre retour, donc voilà.
+
+SPK_1
+13:15
+Vous faites un retour ou j'organise un point soit en fin de semaine ou au début de la semaine prochaine, comme vous voulez.
+
+SPK_1
+13:22
+Je vous laisse déjà vérifier tout ça.
+
+SPK_1
+13:27
+Et dès que vous avez plus de visibilité, je ferai un point dédié.
+
+SPK_1
+13:37
+Voilà.
+
+SPK_1
+13:40
+Et Anwar va vous revenir en regardant la documentation.
+
+SPK_1
+13:46
+De la migration et les étapes à suivre.
+
+SPK_1
+13:49
+Et si jamais il y a quelque chose qui n'est pas clair, il va contacter Nicolas.
+
+SPK_3
+13:52
+Voilà.
+
+SPK_2
+13:54
+Oui, très bien.
+
+SPK_4
+13:55
+En fait, j'ai une question.
+
+SPK_4
+13:57
+Côté technique, est-ce qu'il y a des repos guides pour...
+
+SPK_4
+14:01
+J'ai raccord avec des scripts ou des développements spécifiques?
+
+SPK_3
+14:07
+Moi, je n'en ai pas...
+
+SPK_3
+14:10
+La migration, je l'ai fait il y a 3-4 ans, donc je ne sais pas.
+
+SPK_3
+14:15
+En tout cas, il n'y a pas trop de ressources sur les migrations neufs parce que c'était l'an dernier.
+
+SPK_3
+14:23
+Quasiment toutes les ressources sont sur le cloud.
+
+SPK_3
+14:27
+J'ai un cloud aujourd'hui.
+
+SPK_4
+14:30
+D'accord.
+
+SPK_4
+14:32
+Mais est-ce qu'il y a des accès particuliers à demander pour...
+
+SPK_4
+14:36
+Donc pour travailler sur Jiracore?
+
+SPK_3
+14:39
+Faut juste avoir les droits admins dessus.
+
+SPK_4
+14:42
+Ah, d'accord.
+
+SPK_3
+14:43
+Mais ça c'est des droits admins qui sont dans Jira, c'est pas forcément lié à...
+
+SPK_3
+14:49
+C'est pas des droits admin grandes.
+
+SPK_3
+14:50
+C'est vraiment dans Jira qu'il peut être flaggé comme admin.
+
+SPK_2
+14:54
+Oui, oui, c'est tout.
+
+SPK_4
+14:56
+D'accord.
+
+SPK_3
+14:59
+Et voilà.
+
+SPK_1
+15:02
+Ok.
+
+SPK_3
+15:04
+Avant, il y avait des plugins pour aider aux migrations, etc.
+
+SPK_3
+15:08
+C'est ce qu'on avait fait à l'époque.
+
+SPK_3
+15:09
+Mais aujourd'hui, je n'ai pas l'impression que ce soit...
+
+SPK_3
+15:13
+Il ne se porte plus, donc...
+
+SPK_3
+15:18
+OK.
+
+SPK_1
+15:33
+Ça marche.
+
+SPK_1
+15:34
+Merci beaucoup.
+
+SPK_1
+15:36
+Et on se tient au courant.
+
+SPK_1
+15:38
+J'envoie le mail.
+
+SPK_1
+15:40
+C'est bon.
+
+SPK_4
+15:40
+Merci.
+
+SPK_1
+15:41
+Merci beaucoup.
+
+SPK_2
+15:42
+Ciao.
+
+SPK_2
+15:43
+Merci.
+
+SPK_4
+15:43
+Bonne journée.
+
+SPK_1
+15:44
+Au revoir.
