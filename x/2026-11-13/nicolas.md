@@ -163,3 +163,42 @@ Concrètement, quelles sont les prochaines actions techniques que je peux prendr
 &#x20;Copier les questions
 
 Mon conseil : pendant ce premier échange, privilégie la compréhension de l'existant et la répartition des responsabilités. Les questions détaillées sur les certificats, la reindexation Lucene et le rollback pourront venir ensuite, quand tu auras accès à l'environnement et aux scripts.
+
+
+
+---
+
+---
+
+---
+
+------------------
+
+Alors, de mon côté, j’ai bien pris le temps de regarder la documentation que Nicolas m’a envoyée. Globalement, J’ai compris les grandes ligne, mais j’ai quelques points à clarifier
+
+DEM:O  
+Déjà, pour mieux comprendre l’existant, est-ce que tu peux me montrer rapidement comment Jira est installé aujourd’hui ?
+
+RDP:  
+Si j'ai bien compris, Jira tourne sur un serveur Windows, avec Tomcat et Java, c'est bien ça ?  
+Et pour accéder aux serveurs UAT et PROD, ça se passe comment ? On passe par RDP, par exemple ? Est-ce que je dois demander des accès particuliers ?
+
+REPO:  
+Dans la doc que tu m’as envoyée, tu parles d’un repo Jira. Est-ce que tu pourrais me donner accès ?
+
+DB:  
+Et côté base de données, tu sais ce qu’on utilise ? SQL Server, PostgreSQL ou autre chose ?
+
+ENV:  
+On a juste deux environnements, UAT et PROD, ou il y en a d’autres, comme DEV ou TEST ?
+
+ACTIONS:  
+Et du coup, concrètement, de mon côté, qu’est-ce que je peux commencer à prendre en charge sur la partie technique ?
+
+> OK, merci Nicolas, c'est beaucoup plus clair.
+>
+> De mon côté, je vais continuer à regarder la documentation et commencer par vérifier les accès et les prérequis techniques.
+> 
+> Je vais aussi noter les points qui restent à clarifier et je reviendrai vers toi si j'ai d'autres questions.
+>
+> Merci pour ton aide !
