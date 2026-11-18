@@ -11,8 +11,18 @@ Voilà, c’est tout.
 
 ---
 
-Hello Mohamed, ça va ?
+Alors, de mon côté, j’attends toujours la confirmation que mon nouveau PC est prêt. Du coup, après le daily, je vais repasser à la boutique IT, et si besoin, j’y retournerai cet après-midi.
 
-Je voulais juste savoir si tu avais eu des nouvelles concernant mon nouveau PC depuis ta dernière relance.
+Si j’arrive à récupérer mon PC aujourd’hui, je vais commencer à préparer mon environnement et faire la demande pour les droits admin.
 
-Merci à toi !
+Comme ça, quand je reviendrai de congé, normalement, tout sera prêt et je pourrai démarrer directement.
+
+---
+
+Salut Nicolas,
+
+Je reviens vers toi concernant l'accès au serveur Jira Core UAT et les fichiers de configuration dont on avait parlé lors de notre dernier point.
+
+Est-ce que tu as eu l'occasion de regarder ça ?
+
+Merci d'avance !
