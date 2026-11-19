@@ -1,28 +1,19 @@
-De mon côté, j’attends toujours la confirmation que mon nouveau PC est prêt. donc je vais relancer Mohamed.
+« Alors, de mon côté, après 16 jours, j’attends toujours mon nouveau PC.
 
+« Hier, je suis repassé à la boutique IT, on m’a dit : le PC est toujours chez le fournisseur. Alors qu’avant-hier, on m’avait dit : il est sorti du stock. Bon, bref, je vais repasser aujourd’hui.
 
-Sinon, hier, on a échangé avec Nicolas sur Jira Core. Il nous a montré comment c’est installé aujourd’hui, comment il se connecte aux serveurs avec mRemoteNG, et on a regardé un peu les fichiers sur l’UAT.
+Après, si je le récupère pas aujourd’hui, je sais pas si j’ai le droit de passer le chercher pendant mes congés, juste pour lancer la demande de droits admin. Sinon, je risque encore de perdre deux semaines à mon retour pour les accès et l’installation des logiciels.
 
-Normalement, il va me donner les accès et nous partager les configs.
+Sinon, hier, j’ai pu avancer sur un sujet IGE. On a fait un point avec Jocelyn et on a résolu le problème Sonar. J’ai mis à jour le certificat et le pipeline GitLab, et maintenant, le job passe correctement.
 
-Donc, dès que j’ai mon nouveau PC, je pourrai faire la demande pour installer mRemoteNG, me connecter aux serveurs et commencer à regarder l’existant plus en détail.
-
-Voilà, c’est tout.
-
----
-
-Alors, de mon côté, j’attends toujours la confirmation que mon nouveau PC est prêt. Du coup, après le daily, je vais repasser à la boutique IT, et si besoin, j’y retournerai cet après-midi.
-
-Si j’arrive à récupérer mon PC aujourd’hui, je vais commencer à préparer mon environnement et faire la demande pour les droits admin.
-
-Comme ça, quand je reviendrai de congé, normalement, tout sera prêt et je pourrai démarrer directement.
+Voilà, c’est tout pour moi.
 
 ---
 
-Salut Nicolas,
+Not much from my side.
 
-Je reviens vers toi concernant l'accès au serveur Jira Core UAT et les fichiers de configuration dont on avait parlé lors de notre dernier point.
+Yesterday, we were able to fix the Sonar issue. We had a quick call with Jocelyn and Manel, and we got the certificate from Jocelyn.
 
-Est-ce que tu as eu l'occasion de regarder ça ?
+Then we updated the certificate in the repo and the GitLab pipeline, and now the job is passing.
 
-Merci d'avance !
+That's it for me
